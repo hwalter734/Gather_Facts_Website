@@ -1,0 +1,106 @@
+.navbar {
+  background-color: #0174bf !important;
+  position: fixed;
+  width: 100%;
+  opacity: 1 !important;
+  z-index: 1;
+  height: 8vh;
+}
+
+.table-responsive-md {
+  z-index: 0;
+}
+
+.pagination,
+.dataTables_paginate {
+  display: inline;
+}
+
+.dt-button.buttons-columnVisibility.active {
+  background: #046bb4 !important;
+  font-weight: bold !important;
+  opacity: 0.8 !important;
+  color: white;
+}
+
+.dt-button.buttons-columnVisibility {
+  opacity: 1 !important;
+}
+
+#host_overview {
+  padding-top: 10px;
+}
+/* <div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%; max-height: 300px; height: 300px;"><table id="data-table" class="table table-hover table-bordered dataTable no-footer" aria-describedby="data-table_info" style="width: 2126px; cursor: pointer;"><thead><tr style="height: 0px;"><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 168.05px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Hostname: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Hostname</div></th><th class="sorting sorting_asc" aria-controls="data-table" rowspan="1" colspan="1" style="width: 83.025px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Sub_Group: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Sub_Group</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 198.062px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="FQDN: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">FQDN</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 161.363px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="All_IPV6_Addresses: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">All_IPV6_Addresses</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 89.025px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Kernel: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Kernel</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 74.025px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="CPU_Type: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">CPU_Type</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 37.025px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="RAM: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">RAM</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 131.038px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="NodeName: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">NodeName</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 139.038px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="VirtualizationType: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">VirtualizationType</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 62.025px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="VirtRole: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">VirtRole</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 64.15px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="Machine: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">Machine</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 118.037px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="ProcessorCount: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">ProcessorCount</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 54.025px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="System: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">System</div></th><th class="sorting" aria-controls="data-table" rowspan="1" colspan="1" style="width: 129.113px; padding-top: 0px; padding-bottom: 0px; border-top-width: 0px; border-bottom-width: 0px; height: 0px;" aria-label="PackageManager: activate to sort column ascending"><div class="dataTables_sizing" style="height: 0px; overflow: hidden;">PackageManager</div></th></tr></thead><tbody><tr data-name="rhel_hosts" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="8">rhel_hosts (2)</td></tr><tr data-name="rhel_hostsproduction" class="dtrg-group dtrg-start dtrg-level-1"><td colspan="8">production (1)</td></tr><tr class="odd"><td>satserver</td><td class="sorting_2">production</td><td>satserver.internal.cloudapp.net</td><td>['fe80::222:48ff:fe20:8745']</td><td>3.10.0-1160.el7.x86_64</td><td>Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz</td><td>32011</td><td>satserver</td><td>VirtualPC</td><td>guest</td><td>x86_64</td><td>1</td><td>Linux</td><td>yum</td></tr><tr data-name="rhel_hoststesting" class="dtrg-group dtrg-start dtrg-level-1"><td colspan="8">testing (1)</td></tr><tr class="even"><td>capserver</td><td class="sorting_2">testing</td><td>capserver.internal.cloudapp.net</td><td>['fe80::222:48ff:fe23:2ade']</td><td>3.10.0-1160.el7.x86_64</td><td>Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz</td><td>15885</td><td>capserver</td><td>VirtualPC</td><td>guest</td><td>x86_64</td><td>1</td><td>Linux</td><td>yum</td></tr><tr data-name="windows" class="dtrg-group dtrg-start dtrg-level-0"><td colspan="8">windows (2)</td></tr><tr data-name="windowsdeployment" class="dtrg-group dtrg-start dtrg-level-1"><td colspan="8">deployment (1)</td></tr><tr class="odd"><td>windows_server_secondary</td><td class="sorting_2">deployment</td><td>capserver.internal.cloudapp.net</td><td>['fe80::222:48ff:fe23:2ade']</td><td>3.10.0-1160.el7.x86_64</td><td>Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz</td><td>15885</td><td>windows_server_main</td><td>VirtualPC</td><td>guest</td><td>x86_64</td><td>1</td><td>Windows</td><td>yum</td></tr><tr data-name="windowsdev" class="dtrg-group dtrg-start dtrg-level-1"><td colspan="8">dev (1)</td></tr><tr class="even"><td>windows_server_main</td><td class="sorting_2">dev</td><td>capserver.internal.cloudapp.net</td><td>['fe80::222:48ff:fe23:2ade']</td><td>3.10.0-1160.el7.x86_64</td><td>Intel(R) Xeon(R) Platinum 8272CL CPU @ 2.60GHz</td><td>15885</td><td>windows_server_main</td><td>VirtualPC</td><td>guest</td><td>x86_64</td><td>1</td><td>Windows</td><td>yum</td></tr></tbody></table></div> */
+
+table.dataTable tr.dtrg-group.dtrg-level-0 td {
+  font-weight: bold;
+}
+table.dataTable tr.dtrg-group td {
+  background-color: #e0e0e0;
+}
+table.dataTable tr.dtrg-group.dtrg-level-1 td:first-child {
+  padding-left: 2em;
+}
+table.dataTable tr.dtrg-group.dtrg-level-1 td {
+  background-color: #f0f0f0;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+table.dataTable tr.dtrg-group.dtrg-level-2 td:first-child {
+  padding-left: 3em;
+}
+
+table.dataTable tr.dtrg-group.dtrg-level-2 td {
+  background-color: #fff0f0 !important;
+}
+table.dataTable.compact tbody tr td {
+  padding-left: 4em;
+}
+
+tr:nth-child(even) {
+  background-color: transparent;
+}
+
+.social-footer {
+  flex-shrink: 0;
+  position: fixed;
+  margin-top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8vh;
+  padding: 1rem;
+  opacity: 1;
+  background: #383c44;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.social-footer .social-footer-icons li:last-of-type {
+  margin-right: 0 !important;
+}
+
+.social-footer .social-footer-icons .fa {
+  font-size: 1.3rem;
+  color: #fefefe;
+  transition: 0.3s ease-in-out !important;
+}
+
+.social-footer .social-footer-icons .fa:hover {
+  color: #046bb4;
+}
+
+.social-footer-icons {
+  float: right !important;
+}
+
+.text-muted {
+  color: white !important;
+}

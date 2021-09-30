@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Retrieved Info</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.11.2/css/dataTables.foundation.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.foundation.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.colVis.min.js"
+    ></script>
+    <script src="https://cdn.datatables.net/1.11.2/js/dataTables.foundation.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.1.3/js/dataTables.rowGroup.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <nav
+    class="
+      navbar navbar-default navbar-static-top navbar-expand-lg navbar-dark
+      bg-dark
+      py-lg-0
+    "
+    role="navigation"
+  >
+    <a
+      class="navbar-brand"
+      target="_blank"
+      href="https://www.gbm.net/es/automatizacion"
+    >
+      <img src="images/gbmlogo.png" width="100" height="50" alt="" />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"></li>
+        <li class="nav-item">
+          <a class="nav-link" href="hosts_info_page.html">Normal Hosts</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <body>
+    <br /><br />
+    <div class="container" id="host_overview">
+      <h1 align="center" id="host_header">Network Devices Information</h1>
+      <br />
+      <div class="table-responsive-md">
+        <table id="data-table" class="table table-hover table-bordered"></table>
+        <thead>
+          <tr></tr>
+        </thead>
+      </div>
+    </div>
+    <footer class="social-footer">
+      <div class="social-footer-left">
+        <span class="text-muted">©GBMCorp.</span>
+      </div>
+      <div class="social-footer-icons">
+        <ul class="menu simple">
+          <li>
+            <a href="https://www.facebook.com/GBMCorp"
+              ><i class="fa fa-facebook" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/company/gbm-corp/"
+              ><i class="fa fa-linkedin" aria-hidden="true"></i
+            ></a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>
+<script>
+  var data,
+    tableName = "#data-table",
+    columnsTitles = [],
+    jqxhr = $.ajax("data/network_devices_data.json").done(function () {
+      data = JSON.parse(jqxhr.responseText);
+      columnNames = Object.keys(data.data[0]);
+      for (var i in columnNames) {
+        columnsTitles.push({ data: columnNames[i], title: columnNames[i] });
+      }
+      var collapsedGroups = {};
+      var top = "";
+      var table = $(tableName).DataTable({
+        data: data.data,
+        columns: columnsTitles,
+        title: data.columns,
+        responsive: true,
+        audoWidth: false,
+        scrollResize: true,
+        scrollX: true,
+        scrollY: 300,
+        dom: "B<'row'><'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-4'i>><'row'<'#colvis'>>p",
+        lengthChange: true,
+        fixedHeader: true,
+        buttons: [
+          "selectAll",
+          "selectNone",
+          {
+            extend: "colvis",
+            collectionLayout: "fixed four-column",
+          },
+          "colvisRestore",
+        ],
+        language: {
+          buttons: {
+            selectAll: "Select all",
+            selectNone: "Select none",
+          },
+        },
+        columnDefs: [
+          {
+            visible: false,
+            targets: [6, 7, 8, 10, 11, 12, 15, 16, 18, 21],
+          },
+        ],
+        select: { style: "multi" },
+        order: [[1, "asc"]],
+        rowGroup: {
+          dataSrc: ["Main_Group"],
+          startRender: function (rows, group, level) {
+            var all;
+
+            if (level === 0) {
+              top = group;
+              all = group;
+            } else {
+              // if parent collapsed, nothing to do
+              if (!!collapsedGroups[top]) {
+                return;
+              }
+              all = top + group;
+            }
+
+            var collapsed = !!collapsedGroups[all];
+
+            rows.nodes().each(function (r) {
+              r.style.display = collapsed ? "none" : "";
+            });
+
+            // Add category name to the <tr>. NOTE: Hardcoded colspan
+            return $("<tr/>")
+              .append(
+                '<td colspan="8">' + group + " (" + rows.count() + ")</td>"
+              )
+              .attr("data-name", all)
+              .toggleClass("collapsed", collapsed);
+          },
+        },
+      });
+
+      new $.fn.dataTable.Buttons(table, {
+        buttons: ["copy", "excel"],
+      });
+
+      table.buttons(1, null).container().appendTo(table.table().container());
+      $("#data-table").css("cursor", "pointer");
+      $("#data-table tbody").on("click", "tr.dtrg-start", function () {
+        var name = $(this).data("name");
+        collapsedGroups[name] = !collapsedGroups[name];
+        table.draw(false);
+      });
+      table.on("responsive-resize", function (e, datatable, columns) {
+        var count = columns.reduce(function (a, b) {
+          return b === false ? a + 1 : a;
+        }, 0);
+      });
+    });
+</script>
