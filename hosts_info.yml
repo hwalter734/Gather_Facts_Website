@@ -1,0 +1,8 @@
+---
+- name: Gather network devices facts
+  hosts: normal_hosts
+  tasks:
+    - name: Getting network devices info
+      template:
+        src: hosts_template.j2
+        dest: data/hosts_data.json

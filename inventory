@@ -1,0 +1,46 @@
+[cisco_group]
+newciscohost ansible_host=
+
+[eos_group]
+eoshost ansible_host=
+
+[vyos_group]
+vyoshost ansible_host=
+
+[cisco_group:vars]
+ansible_network_os=ios
+
+[eos_group:vars]
+ansible_network_os=eos
+
+[vyos_group:vars]
+ansible_network_os=vyos
+ansible_user=vyos
+ansible_ssh_private_key_file=
+
+[routers:children]
+cisco_group
+eos_group
+vyos_group
+
+[routers:vars]
+ansible_user=
+ansible_password=
+ansible_connection=network_cli
+ansible_become_password=
+ansible_become=yes
+ansible_become_method=enable
+
+
+[normal_hosts:children]
+azure_hosts
+aws_hosts
+google_hosts
+
+[azure_hosts]
+
+
+[aws_hosts]
+
+
+[google_hosts]

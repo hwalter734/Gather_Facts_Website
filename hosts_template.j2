@@ -1,0 +1,123 @@
+{
+        "data" : [
+{% for host in groups['normal_hosts'] %}
+    {
+        "Hostname": "{{ hostvars[host]['ansible_hostname'] | default('', true) }}",
+        "Main_Group": "{{ hostvars[host]['group_names'] | reject('match','^normal_hosts$') | list | join('\n') | default('', true) }}",
+        "Groups": "{{ hostvars[host]['ansible_hostname'] | default('', true) }}",
+        "FQDN": "{{ hostvars[host]['ansible_fqdn'] | default('', true) }}",
+        "All_IPV4_Addresses": "{{ hostvars[host]['ansible_all_ipv4_addresses'] | default('', true) }}",
+        "All_IPV6_Addresses": "{{ hostvars[host]['ansible_all_ipv6_addresses'] | default('', true) }}",
+        "OS": "{{ hostvars[host]['ansible_distribution'] | default('', true) }}",
+        "Kernel": "{{ hostvars[host]['ansible_kernel'] | default('', true) }}",
+        "Architecture": "{{ hostvars[host]['ansible_architecture'] | default('', true) }}",
+        "Virt": "{{ hostvars[host]['ansible_virtualization_type'] | default('', true) }}",
+        "CPU_Type": "{{ hostvars[host]['ansible_processor'][-1] | default('', true) }}",
+        "VCPUs": "{{ hostvars[host]['ansible_processor_vcpus'] | default('', true) }}",
+        "RAM": "{{ hostvars[host]['ansible_memory_mb']['real']['total'] | default('', true) }}",
+        "PhysDisk_Sizes":"{% for dev in user_devs %} Device:{{ dev[0] }} Free[MB]:{{ dev[2]|int / 1048576 }}{% endfor %}",
+        "n_of_interfaces": "{{ hostvars[host]['ansible_interfaces'] | default('', true) }}",
+        "ProdName": "{{ hostvars[host]['ansible_product_name'] | default('', true) }}",
+        "ProdSerial": "{{ hostvars[host]['ansible_product_serial'] | default('', true) }}",
+        "NodeName": "{{ hostvars[host]['ansible_nodename'] | default('', true) }}",
+        "FormFactor": "{{ hostvars[host]['ansible_form_factor'] | default('', true) }}",
+        "VirtualizationType": "{{ hostvars[host]['ansible_virtualization_type'] | default('', true) }}",
+        "Vendor": "{{ hostvars[host]['ansible_system_vendor'] | default('', true) }}",
+        "VirtRole": "{{ hostvars[host]['ansible_virtualization_role'] | default('', true) }}",
+        "Machine": "{{ hostvars[host]['ansible_machine'] | default('', true) }}",
+        "ProcessorCount": "{{ hostvars[host]['ansible_processor_count'] | default('', true) }}",
+        "ProcessorCores": "{{ hostvars[host]['ansible_processor_cores'] | default('', true) }}",
+        "ProcessorThreadsPerCore": "{{ hostvars[host]['ansible_processor_threads_per_core'] | default('', true) }}",
+        "MemFreeMb": "{{ hostvars[host]['ansible_memfree_mb'] | default('', true) }}",
+        "SwapTotalMb": "{{ hostvars[host]['ansible_swaptotal_mb'] | default('', true) }}",
+        "SwapFreeMb": "{{ hostvars[host]['ansible_swapfree_mb'] | default('', true) }}",
+        "System": "{{ hostvars[host]['ansible_system'] | default('', true) }}",
+        "OSFamily": "{{ hostvars[host]['ansible_os_family'] | default('', true) }}",
+        "DistVersion": "{{ hostvars[host]['ansible_distribution_version'] | default('', true) }}",
+        "DistRelease": "{{ hostvars[host]['ansible_distribution_release'] | default('', true) }}",
+        "UserSpaceBits": "{{ hostvars[host]['ansible_userspace_bits'] | default('', true) }}",
+        "UserSpaceArchitecture": "{{ hostvars[host]['ansible_userspace_architecture'] | default('', true) }}",
+        "SELinux": "{{ hostvars[host]['ansible_selinux'] | default('', true) }}",
+        "PackageManager": "{{ hostvars[host]['ansible_pkg_mgr'] | default('', true) }}",
+{% if loop.index == loop.length %}
+    {% if ansible_local is defined %}
+        "Domain": "{{ hostvars[host]['ansible_domain'] }}",
+        {% for item in ansible_local.values() %}
+            {% if loop.index == loop.length %}
+"{{ item['name'] }}": "{{ item['value'] }}" }
+            {% else %}
+"{{ item['name'] }}": "{{ item['value'] }}",
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        "Domain": "{{ hostvars[host]['ansible_domain'] }}"
+}
+    {% endif %}
+{% else %}
+    {% if ansible_local is defined %}
+        "Domain": "{{ hostvars[host]['ansible_domain'] }}",
+        {% for item in ansible_local.values() %}
+            {% if loop.index == loop.length %}
+"{{ item['name'] }}": "{{ item['value'] }}" },
+            {% else %}
+"{{ item['name'] }}": "{{ item['value'] }}",
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        "Domain": "{{ hostvars[host]['ansible_domain'] }}"
+    },
+    {% endif %}
+{% endif %}
+{% endfor %}
+    ],
+    "columns": [
+        { "data": "Hostname", "name": "Hostname" },
+        { "data": "Main_Group", "name": "Main_Group" },
+        { "data": "Groups", "name": "Groups" },
+        { "data": "All_IPV4_Addresses", "name": "All_IPV4_Addresses" },
+        { "data": "All_IPV6_Addresses", "name": "All_IPV6_Addresses" },
+        { "data": "OS", "name": "OS" },
+        { "data": "Kernel", "name": "Kernel" },
+        { "data": "Architecture", "name": "Architecture" },
+        { "data": "Virt", "name": "Virt" },
+        { "data": "CPU_Type", "name": "CPU_Type" },
+        { "data": "VCPUs", "name": "VCPUs" },
+        { "data": "RAM", "name": "RAM" },
+        { "data": "PhysDisk_Sizes", "name": "PhysDisk_Sizes" },
+        { "data": "n_of_interfaces", "name": "n_of_interfaces" },
+        { "data": "ProdName", "name": "ProdName" },
+        { "data": "ProdSerial", "name": "ProdSerial" },
+        { "data": "NodeName", "name": "NodeName" },
+        { "data": "FormFactor", "name": "Image" },
+        { "data": "VirtualizationType", "name": "VirtualizationType" },
+        { "data": "Vendor", "name": "Vendor" },
+        { "data": "VirtRole", "name": "VirtRole" },
+        { "data": "Machine", "name": "Machine" },
+        { "data": "ProcessorCount", "name": "ProcessorCount" },
+        { "data": "ProcessorCores", "name": "ProcessorCores" },
+        { "data": "ProcessorThreadsPerCore", "name": "ProcessorThreadsPerCore" },
+        { "data": "MemFreeMb", "name": "MemFreeMb" },
+        { "data": "SwapTotalMb", "name": "SwapTotalMb" },
+        { "data": "SwapFreeMb", "name": "SwapFreeMb" },
+        { "data": "System", "name": "System" },
+        { "data": "OSFamily", "name": "OSFamily" },
+        { "data": "DistVersion", "name": "DistVersion" },
+        { "data": "DistRelease", "name": "DistRelease" },
+        { "data": "UserSpaceBits", "name": "UserSpaceBits" },
+        { "data": "UserSpaceArchitecture", "name": "UserSpaceArchitecture" },
+        { "data": "SELinux", "name": "SELinux" },
+        { "data": "PackageManager", "name": "PackageManager" },
+{% if ansible_local is defined %}
+        { "data": "Domain", "name": "Domain" },
+{% for item in ansible_local.values() %}
+{% if loop.index == loop.length %}
+        { "data": "{{ item['name'] }}", "name": "{{ item['name'] }}" }
+{% else %}
+        { "data": "{{ item['name'] }}", "name": "{{ item['name'] }}" },
+{% endif %}
+{% endfor %}
+{% else %}
+        { "data": "Domain", "name": "Domain" }
+{% endif %}
+                ]
+}

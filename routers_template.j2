@@ -1,0 +1,94 @@
+{
+    "data": [
+{% for host in groups['routers'] %}
+    {
+    "Hostname": "{{ hostvars[host]['ansible_facts']['net_hostname'] | default('', true) }}",
+    "Main_Group": "{{ hostvars[host]['group_names'] | select('match','(cisco|eos|vyos)_group$') | list | join('\n') | default('', true) }}",
+    "Groups": "{{ hostvars[host]['group_names'] | join(', ') | trim | default('', true) }}",
+    "API": "{{ hostvars[host]['ansible_facts']['net_api'] | default('', true) }}",
+    "Version": "{{ hostvars[host]['ansible_facts']['net_version'] | default('', true) }}",
+    "Model": "{{ hostvars[host]['ansible_facts']['net_model'] | default('', true) }}",
+    "Subset": "{{ hostvars[host]['ansible_facts']['net_gather_subset'] | default('', true) }}",
+    "Gather_Network_Resources": "{{ hostvars[host]['ansible_facts']['net_gather_network_resources'] | default('', true) }}",
+    "Neighbors": "{{ hostvars[host]['ansible_facts']['net_neighbors'] | default('', true) }}",
+    "Python_Version": "{{ hostvars[host]['ansible_facts']['net_python_version'] | default('', true) }}",
+    "Network_Resources": "{{ hostvars[host]['ansible_facts']['network_resources'] | default('', true) }}",
+    "Filesystems": "{{ hostvars[host]['ansible_facts']['net_filesystems'] | default('', true) }}",
+    "Filesystems_Info": "{{ hostvars[host]['ansible_facts']['net_filesystems_info'] | default('', true) }}",
+    "Memtotal_Mb": "{{ hostvars[host]['ansible_facts']['net_memtotal_mb'] | default('', true) | int }}",
+    "Memfree_Mb": "{{ hostvars[host]['ansible_facts']['net_memfree_mb'] | default('', true) | int }}",
+    "All_IPV4_Addresses": "{{ hostvars[host]['ansible_facts']['net_all_ipv4addresses'] | default('', true) }}",
+    "All_IPV6_Addresses": "{{ hostvars[host]['ansible_facts']['net_all_ipv6addresses'] | default('', true) }}",
+    "System": "{{ hostvars[host]['ansible_facts']['net_system'] | default('', true) }}",
+    "Interfaces": "{{ hostvars[host]['ansible_facts']['net_interfaces'] | default('', true) }}",
+    "Image": "{{ hostvars[host]['ansible_facts']['net_image'] | default('', true) }}",
+    "IOSType": "{{ hostvars[host]['ansible_facts']['net_iostype'] | default('', true) }}",
+    "FQDN": "{{ hostvars[host]['ansible_facts']['net_fqdn'] | default('', true) }}",
+{% if loop.index == loop.length %}
+    {% if ansible_local is defined %}
+"SerialNum": "{{ hostvars[host]['ansible_facts']['net_serialnum'] | default('', true) }}",
+        {% for item in ansible_local.values() %}
+            {% if loop.index == loop.length %}
+"{{ item['name'] }}": "{{ item['value'] }}" }
+            {% else %}
+"{{ item['name'] }}": "{{ item['value'] }}",
+            {% endif %}
+        {% endfor %}
+    {% else %}
+"SerialNum": "{{ hostvars[host]['ansible_facts']['net_serialnum'] | default('', true) }}"
+    }
+    {% endif %}
+{% else %}
+    {% if ansible_local is defined %}
+    "SerialNum": "{{ hostvars[host]['ansible_facts']['net_serialnum'] | default('', true) }}",
+        {% for item in ansible_local.values() %}
+            {% if loop.index == loop.length %}
+"{{ item['name'] }}": "{{ item['value'] }}" },
+            {% else %}
+"{{ item['name'] }}": "{{ item['value'] }}",
+            {% endif %}
+        {% endfor %}
+    {% else %}
+"SerialNum": "{{ hostvars[host]['ansible_facts']['net_serialnum'] | default('', true) }}"
+    },
+    {% endif %}
+{% endif %}
+{% endfor %}
+    ],
+    "columns": [
+        { "data": "Hostname", "name": "Hostname" },
+        { "data": "Main_Group", "name": "Main_Group" },
+        { "data": "Groups", "name": "Groups" },
+        { "data": "API", "name": "API" },
+        { "data": "Version", "name": "Version" },
+        { "data": "Model", "name": "Model" },
+        { "data": "Subset", "name": "Subset" },
+        { "data": "Gather_Network_Resources", "name": "Gather_Network_Resources" },
+        { "data": "Neighbors", "name": "Neighbors" },
+        { "data": "Python_Version", "name": "Python_Version" },
+        { "data": "Network_Resources", "name": "Network_Resources" },
+        { "data": "Filesystems", "name": "Filesystems" },
+        { "data": "Filesystems_Info", "name": "Filesystems_Info" },
+        { "data": "Memtotal_Mb", "name": "Memtotal_Mb" },
+        { "data": "Memfree_Mb", "name": "Memfree_Mb" },
+        { "data": "All_IPV4_Addresses", "name": "All_IPV4_Addresses" },
+        { "data": "All_IPV6_Addresses", "name": "All_IPV6_Addresses" },
+        { "data": "System", "name": "System" },
+        { "data": "Interfaces", "name": "Interfaces" },
+        { "data": "Image", "name": "Image" },
+        { "data": "IOSType", "name": "IOSType" },
+        { "data": "FQDN", "name": "FQDN" },
+{% if ansible_local is defined %}
+        { "data": "SerialNum", "name": "SerialNum" },
+{% for item in ansible_local.values() %}
+{% if loop.index == loop.length %}
+        { "data": "{{ item['name'] }}", "name": "{{ item['name'] }}" }
+{% else %}
+        { "data": "{{ item['name'] }}", "name": "{{ item['name'] }}" },
+{% endif %}
+{% endfor %}
+{% else %}
+        { "data": "SerialNum", "name": "SerialNum" }
+{% endif %}
+                ]
+}

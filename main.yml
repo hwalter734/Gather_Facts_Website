@@ -1,0 +1,6 @@
+---
+- import_playbook: hosts_info.yml
+  when: "'normal_hosts' in group_names"
+
+- import_playbook: routers_info.yml
+  when: "'routers' in group_names"

@@ -1,0 +1,8 @@
+---
+- name: Gather network devices facts
+  hosts: routers
+  tasks:
+    - name: Getting network devices info
+      template:
+        src: routers_template.j2
+        dest: data/network_devices_data.json
