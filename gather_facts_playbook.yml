@@ -1,0 +1,15 @@
+---
+- name: Importing hosts_info.yml
+  import_playbook: hosts_info.yml
+  when: "'normal_hosts' is in groups and 'routers' is not in groups"
+
+- name: Importing routers_info.yml
+  import_playbook: routers_info.yml
+  when: "'normal_hosts' is not in groups and 'routers' is in groups"
+  
+- name: Importing general_info.yml
+  import_playbook: general_info.yml
+  when: "'normal_hosts' is in groups and 'routers' is in groups"
+
+- name: Importing setup_website.yml
+  import_playbook: setup_website.yml

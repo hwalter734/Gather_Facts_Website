@@ -15,7 +15,11 @@
         "CPU_Type": "{{ hostvars[host]['ansible_processor'][-1] | default('', true) }}",
         "VCPUs": "{{ hostvars[host]['ansible_processor_vcpus'] | default('', true) }}",
         "RAM": "{{ hostvars[host]['ansible_memory_mb']['real']['total'] | default('', true) }}",
-        "PhysDisk_Sizes":"{% for dev in user_devs %} Device:{{ dev[0] }} Free[MB]:{{ dev[2]|int / 1048576 }}{% endfor %}",
+{% if hostvars[host]['ansible_os_family'] == "Windows" %}
+	"PhysDisk_Sizes": "DiskSpaceTotal[MB]: {{ hostvars[host]['totaldiskspace'] | int * 1000 }}, FreeSpace[MB]: {{ hostvars[host]['freediskspace'] | int * 1000 }}",
+{% else %}
+        "PhysDisk_Sizes":"{% for dev in user_devs %} Device:{{ dev[0] }} Free[MB]:{{ (dev[2] / 1048576) | int }}{% endfor %}",
+{% endif %}
         "n_of_interfaces": "{{ hostvars[host]['ansible_interfaces'] | default('', true) }}",
         "ProdName": "{{ hostvars[host]['ansible_product_name'] | default('', true) }}",
         "ProdSerial": "{{ hostvars[host]['ansible_product_serial'] | default('', true) }}",

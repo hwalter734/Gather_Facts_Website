@@ -16,7 +16,7 @@
     "Filesystems": "{{ hostvars[host]['ansible_facts']['net_filesystems'] | default('', true) }}",
     "Filesystems_Info": "{{ hostvars[host]['ansible_facts']['net_filesystems_info'] | default('', true) }}",
     "Memtotal_Mb": "{{ hostvars[host]['ansible_facts']['net_memtotal_mb'] | default('', true) | int }}",
-    "Memfree_Mb": "{{ hostvars[host]['ansible_facts']['net_memfree_mb'] | default('', true) | int }}",
+    "Memfree_Mb": "{{ hostvars[host]['ansible_facts']['net_memfree_mb']  | default('', true) | int }}",
     "All_IPV4_Addresses": "{{ hostvars[host]['ansible_facts']['net_all_ipv4addresses'] | default('', true) }}",
     "All_IPV6_Addresses": "{{ hostvars[host]['ansible_facts']['net_all_ipv6addresses'] | default('', true) }}",
     "System": "{{ hostvars[host]['ansible_facts']['net_system'] | default('', true) }}",

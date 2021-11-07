@@ -1,6 +1,103 @@
 ---
-- import_playbook: hosts_info.yml
-  when: "'normal_hosts' in group_names"
+- name: Creation of single VM instance on Azure
+  hosts: localhost
+  tasks:
+    - name: Creating an azure resource group...
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
 
-- import_playbook: routers_info.yml
-  when: "'routers' in group_names"
+    - name: Validate ip addresses...
+      block:
+        - name: Obtaining user's ip addresses...
+          set_fact:
+            ip_var: "{{ vn_address | ipaddr }}"
+            ip_var_subnet_1: "{{ server_address | ipaddr }}"
+
+        - name: Checking virtual network ip...
+          fail:
+            msg: The provided ip is not valid, please enter a valid ip
+          when: ip_var == false
+
+        - name: Checking virtual subnet's ip...
+          fail:
+            msg: The provided virtual subnet ip is not valid, please enter a valid ip
+          when: ip_var_subnet_1 == false
+
+    - name: Creating ingress TCP rules for main server... 
+      azure_rm_securitygroup:
+        name: "{{ sg_name }}"
+        resource_group: "{{ resource_group }}"
+        rules:
+          - name: AllowSsh
+            protocol: Tcp
+            destination_port_range: 22
+            access: Allow
+            priority: 1001
+            direction: Inbound
+          - name: AllowHttp&https
+            protocol: Tcp
+            destination_port_range:
+              - 80
+              - 443
+            access: Allow
+            priority: 1002
+            direction: Inbound
+        state: present
+
+    - name: Creating the virtual network...
+      azure_rm_virtualnetwork:
+        name: "{{ vn_name }}"
+        resource_group: "{{ resource_group }}"
+        address_prefixes: "{{ ip_var }}"
+        state: present
+
+    - name: Creating the main server subnet...
+      azure_rm_subnet:
+        name: "{{ server_subnet_name }}"
+        resource_group: "{{ resource_group }}"
+        address_prefix_cidr: "{{ server_address }}"
+        virtual_network: "{{ vn_name }}"
+        security_group: "{{ sg_name }}"
+        state: present
+      ignore_errors: yes
+
+    - name: Creating a public ip address for the main server...
+      azure_rm_publicipaddress:
+        name: "{{ public_ip_name }}"
+        resource_group: "{{ resource_group }}"
+        allocation_method: Static
+        state: present
+      register: output_ip_address
+
+    - name: Output public IP
+      debug:
+        msg: "The server's public IP is {{ output_ip_address }}"
+
+    - name: Creating a virtual network interface card for the main server...
+      azure_rm_networkinterface:
+        name: "{{ main_nic_name }}"
+        resource_group: "{{ resource_group }}"
+        virtual_network: "{{ vn_name }}"
+        subnet: "{{ server_subnet_name }}"
+        public_ip_name: "{{ public_ip_name }}"
+        security_group: "{{ sg_name }}"
+        state: present
+
+    - name: Creating the main server instance...
+      azure_rm_virtualmachine:
+        name: "{{ server_instance_name }}"
+        admin_username: "{{ admin_username }}"
+        admin_password: "{{ admin_password }}"
+        resource_group: "{{ resource_group }}"
+        virtual_network_name: "{{ vn_name }}"
+        vm_size: "{{ server_size }}"
+        network_interfaces: "{{ main_nic_name }}"  
+        subnet_name: "{{ server_subnet_name }}"
+        os_type: Linux
+        image:
+          publisher: "{{ vm_publisher }}"
+          offer: "{{ vm_offer }}"
+          sku: "{{ vm_sku }}"
+          version: latest
+        state: present
